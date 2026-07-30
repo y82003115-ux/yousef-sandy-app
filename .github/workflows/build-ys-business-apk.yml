@@ -1477,6 +1477,13 @@ jobs:
           YSB64
           base64 --decode /tmp/ysb.b64 > "ys-business-build/settings.gradle"
 
+      - name: Fix Android PrintManager import
+        shell: bash
+        run: |
+          sed -i 's/import android\.app\.PrintManager;/import android.print.PrintManager;/' \
+            ys-business-build/app/src/main/java/com/ysbusiness/mobile/MainActivity.java
+          grep -n 'PrintManager' ys-business-build/app/src/main/java/com/ysbusiness/mobile/MainActivity.java
+
       - name: Validate JavaScript
         shell: bash
         run: node --check ys-business-build/app/src/main/assets/www/app.js
